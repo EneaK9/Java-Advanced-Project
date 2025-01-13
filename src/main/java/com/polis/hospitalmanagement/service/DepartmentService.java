@@ -1,17 +1,12 @@
 package com.polis.hospitalmanagement.service;
 
 import com.polis.hospitalmanagement.entity.Department;
-import com.polis.hospitalmanagement.entity.Patient;
-import com.polis.hospitalmanagement.entity.Admission;
+import com.polis.hospitalmanagement.exception.DepartmentNotFoundException;
 import com.polis.hospitalmanagement.repository.DepartmentRepository;
-import com.polis.hospitalmanagement.repository.PatientRepository;
-import com.polis.hospitalmanagement.repository.AdmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-
 
 @Service
 public class DepartmentService {
@@ -19,19 +14,31 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public List<Department> findAll() {
+    public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
     }
 
-    public Optional<Department> findById(Long id) {
-        return departmentRepository.findById(id);
+    public Department getDepartmentById(Long id) {
+        return departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Department with ID " + id + " not found"));
     }
 
-    public Department save(Department department) {
+    public Department createDepartment(Department department) {
         return departmentRepository.save(department);
     }
 
-    public void deleteById(Long id) {
-        departmentRepository.deleteById(id);
+    public Department updateDepartment(Long id, Department departmentDetails) {
+        Department department = getDepartmentById(id);
+        department.setName(departmentDetails.getName());
+        department.setDescription(departmentDetails.getDescription());
+        return departmentRepository.save(department);
+    }
+
+    public void deleteDepartment(Long id) {
+        Department department = getDepartmentById(id);
+        if (!department.getPatients().isEmpty()) {
+            throw new RuntimeException("Cannot delete department with associated patients.");
+        }
+        departmentRepository.delete(department);
     }
 }
+

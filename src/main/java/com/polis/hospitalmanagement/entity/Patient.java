@@ -1,13 +1,22 @@
 package com.polis.hospitalmanagement.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "patient")
 public class Patient {
 
+    // Getters and Setters
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,62 +24,54 @@ public class Patient {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String identificationNumber;
+    @Setter
+    @Getter
+    @Column(nullable = false)
+    private String lastName;
+
+    @Setter
+    @Getter
+    @Column(nullable = false)
+    private String dateOfBirth;
+
+    @Setter
+
+    @Getter
+    private String address;
+
+    @Setter
+    @Getter
+
+    private String phone;
+
+    @Getter
+    @Setter
 
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
+
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Admission> admissions = new ArrayList<>();
 
-    // Constructors, getters, setters
-    public Patient() {}
+    @Setter
 
-    public Patient(String name, String identificationNumber, Department department) {
-        this.name = name;
-        this.identificationNumber = identificationNumber;
-        this.department = department;
-    }
+    @Getter
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ClinicalRecord> clinicalRecords;
 
-    public Long getId() {
-        return id;
-    }
+    // Getters and Setters
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getName() {
+    public String getFirstName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.name = firstName;
     }
 
-    public String getIdentificationNumber() {
-        return identificationNumber;
-    }
-
-    public void setIdentificationNumber(String identificationNumber) {
-        this.identificationNumber = identificationNumber;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public List<Admission> getAdmissions() {
-        return admissions;
-    }
-
-    public void setAdmissions(List<Admission> admissions) {
-        this.admissions = admissions;
-    }
 }

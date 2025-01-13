@@ -1,9 +1,13 @@
 package com.polis.hospitalmanagement.entity;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDate;
+
+@Setter
+@Getter
 @Entity
 @Table(name = "admission")
 public class Admission {
@@ -16,20 +20,17 @@ public class Admission {
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
-    @Column(nullable = false)
-    private String admissionReason;
+    private LocalDate admissionDate;
 
-    @Column(nullable = true)
-    private String dischargeReason;
+    private LocalDate dischargeDate;
 
-    // Constructors, getters, setters
-    public Admission() {}
+    @Enumerated(EnumType.STRING)
+    private DischargeReason dischargeReason;
 
-    public Admission(Patient patient, String admissionReason) {
-        this.patient = patient;
-        this.admissionReason = admissionReason;
-    }
+    @Lob
+    private String notes;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -46,19 +47,40 @@ public class Admission {
         this.patient = patient;
     }
 
-    public String getAdmissionReason() {
-        return admissionReason;
+    public LocalDate getAdmissionDate() {
+        return admissionDate;
     }
 
-    public void setAdmissionReason(String admissionReason) {
-        this.admissionReason = admissionReason;
+    public void setAdmissionDate(LocalDate admissionDate) {
+        this.admissionDate = admissionDate;
     }
 
-    public String getDischargeReason() {
+    public LocalDate getDischargeDate() {
+        return dischargeDate;
+    }
+
+    public void setDischargeDate(LocalDate dischargeDate) {
+        this.dischargeDate = dischargeDate;
+    }
+
+    public DischargeReason getDischargeReason() {
         return dischargeReason;
     }
 
-    public void setDischargeReason(String dischargeReason) {
+    public void setDischargeReason(DischargeReason dischargeReason) {
         this.dischargeReason = dischargeReason;
     }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public enum DischargeReason {
+        HEALTHY, TRANSFERRED, DECEASED
+    }
+
 }

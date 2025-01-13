@@ -1,9 +1,14 @@
 package com.polis.hospitalmanagement.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "department")
 public class Department {
@@ -15,16 +20,12 @@ public class Department {
     @Column(nullable = false, unique = true)
     private String name;
 
+    private String description;
+
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Patient> patients = new ArrayList<>();
 
-    // Constructors, getters, setters
-    public Department() {}
-
-    public Department(String name) {
-        this.name = name;
-    }
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -41,6 +42,14 @@ public class Department {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<Patient> getPatients() {
         return patients;
     }
@@ -48,4 +57,5 @@ public class Department {
     public void setPatients(List<Patient> patients) {
         this.patients = patients;
     }
+
 }

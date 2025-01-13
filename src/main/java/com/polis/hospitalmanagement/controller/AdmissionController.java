@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admissions")
@@ -18,23 +17,27 @@ public class AdmissionController {
 
     @GetMapping
     public List<Admission> getAllAdmissions() {
-        return admissionService.findAll();
+        return admissionService.getAllAdmissions();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Admission> getAdmissionById(@PathVariable Long id) {
-        Optional<Admission> admission = admissionService.findById(id);
-        return admission.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(admissionService.getAdmissionById(id));
     }
 
     @PostMapping
-    public Admission createAdmission(@RequestBody Admission admission) {
-        return admissionService.save(admission);
+    public ResponseEntity<Admission> createAdmission(@RequestBody Admission admission) {
+        return ResponseEntity.ok(admissionService.createAdmission(admission));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Admission> updateAdmission(@PathVariable Long id, @RequestBody Admission admission) {
+        return ResponseEntity.ok(admissionService.updateAdmission(id, admission));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAdmission(@PathVariable Long id) {
-        admissionService.deleteById(id);
+        admissionService.deleteAdmission(id);
         return ResponseEntity.noContent().build();
     }
 }

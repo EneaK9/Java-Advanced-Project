@@ -1,16 +1,11 @@
 package com.polis.hospitalmanagement.service;
 
-import com.polis.hospitalmanagement.entity.Department;
-import com.polis.hospitalmanagement.entity.Patient;
 import com.polis.hospitalmanagement.entity.Admission;
-import com.polis.hospitalmanagement.repository.DepartmentRepository;
-import com.polis.hospitalmanagement.repository.PatientRepository;
 import com.polis.hospitalmanagement.repository.AdmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdmissionService {
@@ -18,19 +13,28 @@ public class AdmissionService {
     @Autowired
     private AdmissionRepository admissionRepository;
 
-    public List<Admission> findAll() {
+    public List<Admission> getAllAdmissions() {
         return admissionRepository.findAll();
     }
 
-    public Optional<Admission> findById(Long id) {
-        return admissionRepository.findById(id);
+    public Admission getAdmissionById(Long id) {
+        return admissionRepository.findById(id).orElseThrow(() -> new RuntimeException("Admission not found"));
     }
 
-    public Admission save(Admission admission) {
+    public Admission createAdmission(Admission admission) {
         return admissionRepository.save(admission);
     }
 
-    public void deleteById(Long id) {
+    public Admission updateAdmission(Long id, Admission admissionDetails) {
+        Admission admission = getAdmissionById(id);
+        admission.setAdmissionDate(admissionDetails.getAdmissionDate());
+        admission.setDischargeDate(admissionDetails.getDischargeDate());
+        admission.setDischargeReason(admissionDetails.getDischargeReason());
+        admission.setNotes(admissionDetails.getNotes());
+        return admissionRepository.save(admission);
+    }
+
+    public void deleteAdmission(Long id) {
         admissionRepository.deleteById(id);
     }
 }
