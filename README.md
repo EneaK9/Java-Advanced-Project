@@ -1,246 +1,174 @@
-Hospital Management System - Polis Healthy Hospital
+# Hospital Management System
 
-Project Overview
+## Project Overview
+The **Hospital Management System** is a software application developed to manage admissions, discharges, departments, and patient clinical records for "Polis Healthy Hospital" (PHH). The project is built using **Java Spring Boot** with a **MySQL** database and provides a RESTful API for managing hospital data.
 
-The Hospital Management System is a comprehensive web application developed for Polis Healthy Hospital (PHH). This system is designed to manage hospital operations such as department management, patient records, admissions/discharges, and clinical records. The application leverages Java Spring Boot for the backend and integrates with MySQL as the relational database.
+## Features
+- **Manage Departments**: CRUD operations for hospital departments.
+- **Manage Patients**: CRUD operations for patient records, including assigning patients to departments.
+- **Manage Admissions and Discharges**: Track patient admissions, discharges, and their reasons (Healthy, Transferred, Deceased).
+- **Manage Clinical Records**: Maintain clinical notes for each patient.
+- **Error Handling**: User-friendly error messages and server-side exception handling.
+- **Unit Testing**: Automated unit tests using JUnit for key services.
 
-This project includes the following core functionalities:
+---
 
-Department Management: CRUD operations for hospital departments.
+## Prerequisites
+To set up and run the project, ensure you have the following installed:
 
-Patient Management: CRUD operations for patient records, including linking patients to departments.
+1. **Java**: Version 23.
+2. **Maven**: For building the project.
+3. **MySQL**: For the relational database.
+4. **Postman** (optional): For testing the RESTful APIs.
 
-Admissions and Discharges: Manage patient admissions and track discharge details.
+---
 
-Clinical Records: Maintain clinical notes and histories for patients.
+## Technologies Used
+- **Spring Boot 3.4.1**
+- **MySQL 8.0.34**
+- **JUnit 5** for testing
+- **Maven** for dependency management
+- **Lombok** for reducing boilerplate code
 
-RESTful API implementation and testing.
+---
 
-Unit testing using JUnit.
+## Project Structure
+```
+hospital-management/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com.polis.hospitalmanagement/
+│   │   │       ├── config/              # Swagger configuration (optional)
+│   │   │       ├── controller/          # RESTful controllers
+│   │   │       ├── model/               # Entity models
+│   │   │       ├── repository/          # JPA repositories
+│   │   │       └── service/             # Business logic
+│   │   └── resources/
+│   │       ├── application.properties   # Database and server configurations
+│   └── test/
+│       └── java/
+│           └── com.polis.hospitalmanagement/
+│               └── service/             # Unit tests for services
+├── pom.xml                              # Maven configuration
+└── README.md                            # Project documentation
+```
 
-Features
+---
 
-Department Management
+## Setup Instructions
 
-Create: Add new departments with unique names and descriptions.
-
-Read: Retrieve all departments or a specific department by ID.
-
-Update: Modify department details.
-
-Delete: Remove a department if no patients are linked to it.
-
-Patient Management
-
-Create: Add patient records with personal details and link them to a department.
-
-Read: Retrieve patient details by ID or list all patients.
-
-Update: Modify patient information.
-
-Delete: Remove patient records.
-
-Admissions and Discharges
-
-Admission Management: Record the admission date and other details.
-
-Discharge Management: Track discharge dates, reasons (e.g., healthy, deceased, transferred), and additional notes.
-
-Clinical Records
-
-Create Clinical Notes: Add patient-specific clinical notes.
-
-Retrieve Clinical Records: View patient clinical history.
-
-Update and Delete Clinical Notes: Modify or remove records.
-
-Technologies Used
-
-Java 17: Primary programming language.
-
-Spring Boot 3.4.1: Backend framework.
-
-MySQL 8.0.40: Relational database.
-
-JUnit: Unit testing framework.
-
-Postman: API testing.
-
-Maven: Dependency and build management.
-
-Setup Instructions
-
-Prerequisites
-
-Java 17 or later installed.
-
-Maven installed.
-
-MySQL installed and running.
-
-IDE (e.g., IntelliJ IDEA, Eclipse) for development (optional).
-
-Step-by-Step Setup
-
-Clone the Repository:
-
-git clone <repository_url>
+### Step 1: Clone the Repository
+Clone the project repository from GitHub:
+```bash
+https://github.com/EneaK9/Java-Advanced-Project
 cd hospital-management
+```
 
-Configure the Database:
-
-Create a MySQL database:
-
-CREATE DATABASE hospital_management;
-
-Update the application.properties file in src/main/resources:
-
+### Step 2: Configure the Database
+Create a MySQL database named `hospital_management` and configure the credentials in `application.properties`:
+```properties
+# Database Configuration
 spring.datasource.url=jdbc:mysql://localhost:3306/hospital_management
 spring.datasource.username=root
 spring.datasource.password=yourpassword
+
+# Hibernate Configuration
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+```
 
-Build the Project:
-
+### Step 3: Build the Project
+Build the project using Maven:
+```bash
 mvn clean install
+```
 
-Run the Application:
-
+### Step 4: Run the Application
+Start the Spring Boot application:
+```bash
 mvn spring-boot:run
+```
+The application will be available at `http://localhost:8080`.
 
-Access the Application:
+---
 
-The backend API runs on http://localhost:8080.
+## API Endpoints
 
-Test endpoints using Postman.
+### Department Management
+| HTTP Method | Endpoint                | Description                    |
+|-------------|-------------------------|--------------------------------|
+| GET         | `/api/departments`      | Get all departments            |
+| GET         | `/api/departments/{id}` | Get a department by ID         |
+| POST        | `/api/departments`      | Create a new department        |
+| PUT         | `/api/departments/{id}` | Update an existing department  |
+| DELETE      | `/api/departments/{id}` | Delete a department            |
 
-API Endpoints
+### Patient Management
+| HTTP Method | Endpoint            | Description                |
+|-------------|---------------------|----------------------------|
+| GET         | `/api/patients`     | Get all patients           |
+| GET         | `/api/patients/{id}`| Get a patient by ID        |
+| POST        | `/api/patients`     | Create a new patient       |
+| PUT         | `/api/patients/{id}`| Update an existing patient |
+| DELETE      | `/api/patients/{id}`| Delete a patient           |
 
-Department Endpoints
+### Admission and Discharge Management
+| HTTP Method | Endpoint                 | Description                        |
+|-------------|--------------------------|------------------------------------|
+| GET         | `/api/admissions`        | Get all admissions                 |
+| GET         | `/api/admissions/{id}`   | Get an admission by ID             |
+| POST        | `/api/admissions`        | Create a new admission             |
+| PUT         | `/api/admissions/{id}`   | Update an existing admission       |
+| DELETE      | `/api/admissions/{id}`   | Delete an admission                |
 
-Get All Departments
+### Clinical Records Management
+| HTTP Method | Endpoint                     | Description                          |
+|-------------|------------------------------|--------------------------------------|
+| GET         | `/api/clinical-records`      | Get all clinical records             |
+| GET         | `/api/clinical-records/{id}` | Get a clinical record by ID          |
+| POST        | `/api/clinical-records`      | Create a new clinical record         |
+| PUT         | `/api/clinical-records/{id}` | Update an existing clinical record   |
+| DELETE      | `/api/clinical-records/{id}` | Delete a clinical record             |
 
-Method: GET
+---
 
-Endpoint: /api/departments
+## Unit Testing
+Unit tests have been written for the following services:
 
-Response:
+### Coverage
+1. **DepartmentService**
+2. **PatientService**
+3. **AdmissionService**
+4. **ClinicalRecordService**
 
-[
-  {
-    "id": 1,
-    "name": "Cardiology",
-    "description": "Heart-related treatments"
-  }
-]
-
-Get Department by ID
-
-Method: GET
-
-Endpoint: /api/departments/{id}
-
-Create Department
-
-Method: POST
-
-Endpoint: /api/departments
-
-Request Body:
-
-{
-  "name": "Neurology",
-  "description": "Brain and nerve treatments"
-}
-
-Update Department
-
-Method: PUT
-
-Endpoint: /api/departments/{id}
-
-Delete Department
-
-Method: DELETE
-
-Endpoint: /api/departments/{id}
-
-Patient Endpoints
-
-Get All Patients
-
-Method: GET
-
-Endpoint: /api/patients
-
-Create Patient
-
-Method: POST
-
-Endpoint: /api/patients
-
-Request Body:
-
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "dateOfBirth": "1990-01-01",
-  "address": "123 Main St",
-  "phone": "1234567890",
-  "departmentId": 1
-}
-
-Unit Testing
-
-Unit tests were written using JUnit for core services.
-
-Sample Tests
-
-DepartmentServiceTest
-
-Test getDepartmentById for success and failure scenarios.
-
-Validate exception messages for not-found cases.
-
-PatientServiceTest
-
-Test createPatient and getPatientById functionality.
-
-Running Tests
-
-To run all tests:
-
+### Example Test Output
+Run tests using:
+```bash
 mvn test
+```
 
-Screenshots
+Sample output:
+```
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+```
 
-Postman API Tests
+---
 
-Example of GET /api/departments:
+## Screenshots
+### Postman API Tests
+![Postman Tests](https://via.placeholder.com/800x400 "Postman Tests Screenshot")
 
+### Unit Test Results
+![JUnit Tests](https://via.placeholder.com/800x400 "JUnit Tests Screenshot")
 
-Example of POST /api/patients:
+---
 
+## Contributors
+- **Your Name** - [your-email@example.com](mailto:your-email@example.com)
 
-Unit Test Results
+---
 
-Successful mvn test run:
-
-
-Future Enhancements
-
-Implement Swagger UI for API documentation.
-
-Add user authentication and authorization.
-
-Deploy the application to a cloud platform like AWS or Heroku.
-
-Authors
-
-Your Name
-
-License
-
-This project is licensed under the MIT License.
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
