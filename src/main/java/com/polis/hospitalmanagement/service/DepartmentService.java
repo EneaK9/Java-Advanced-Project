@@ -19,7 +19,8 @@ public class DepartmentService {
     }
 
     public Department getDepartmentById(Long id) {
-        return departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Department with ID " + id + " not found"));
+        return departmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Department not found"));
     }
 
     public Department createDepartment(Department department) {

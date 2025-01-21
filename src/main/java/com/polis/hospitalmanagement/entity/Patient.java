@@ -8,70 +8,75 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name = "patient")
 public class Patient {
 
-    // Getters and Setters
-    @Setter
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String firstName;
 
-    @Setter
-    @Getter
     @Column(nullable = false)
     private String lastName;
 
-    @Setter
-    @Getter
     @Column(nullable = false)
     private String dateOfBirth;
 
-    @Setter
-
-    @Getter
     private String address;
 
-    @Setter
-    @Getter
-
     private String phone;
-
-    @Getter
-    @Setter
 
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
-
-    @Setter
-    @Getter
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Admission> admissions = new ArrayList<>();
 
-    @Setter
-
-    @Getter
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClinicalRecord> clinicalRecords;
-
-    // Getters and Setters
-
-
-    public String getFirstName() {
-        return name;
-    }
+    private List<ClinicalRecord> clinicalRecords = new ArrayList<>();
 
     public void setFirstName(String firstName) {
-        this.name = firstName;
+        this.firstName = firstName;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public String getPhone() {
+        return phone;
+    }
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+    public Department getDepartment() {
+        return department;
+    }
 }

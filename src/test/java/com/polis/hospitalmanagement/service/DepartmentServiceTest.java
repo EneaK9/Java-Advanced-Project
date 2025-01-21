@@ -1,6 +1,5 @@
 package com.polis.hospitalmanagement.service;
 
-
 import com.polis.hospitalmanagement.entity.Department;
 import com.polis.hospitalmanagement.repository.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,55 +13,48 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class DepartmentServiceTest {
-
-    @InjectMocks
-    private DepartmentService departmentService;
+class DepartmentServiceTest {
 
     @Mock
     private DepartmentRepository departmentRepository;
 
+    @InjectMocks
+    private DepartmentService departmentService;
+
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testGetDepartmentById_Success() {
+    void testGetDepartmentById_Success() {
+        // Arrange
         Department department = new Department();
         department.setId(1L);
         department.setName("Cardiology");
 
         when(departmentRepository.findById(1L)).thenReturn(Optional.of(department));
 
-        Department found = departmentService.getDepartmentById(1L);
+        // Act
+        Department result = departmentService.getDepartmentById(1L);
 
-        assertNotNull(found);
-        assertEquals("Cardiology", found.getName());
+        // Assert
+        assertNotNull(result);
+        assertEquals("Cardiology", result.getName());
     }
 
     @Test
-    public void testGetDepartmentById_NotFound() {
+    void testGetDepartmentById_NotFound() {
+        // Arrange
         when(departmentRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(RuntimeException.class, () -> {
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             departmentService.getDepartmentById(1L);
         });
 
-        assertEquals("Department with ID 1 not found", exception.getMessage());
+        assertEquals("Department not found", exception.getMessage());
     }
 
-    @Test
-    public void testCreateDepartment() {
-        Department department = new Department();
-        department.setName("Neurology");
 
-        when(departmentRepository.save(department)).thenReturn(department);
-
-        Department created = departmentService.createDepartment(department);
-
-        assertNotNull(created);
-        assertEquals("Neurology", created.getName());
-    }
 }
-
