@@ -1,5 +1,7 @@
 package com.polis.hospitalmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +24,10 @@ public class Department {
 
     private String description;
 
+
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Patient> patients = new ArrayList<>();
+    @JsonIgnore  // ✅ Prevents infinite recursion
+    private List<Patient> patients;
 
     // Getters and Setters
     public Long getId() {

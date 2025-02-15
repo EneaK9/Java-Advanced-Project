@@ -1,6 +1,8 @@
 package com.polis.hospitalmanagement.service;
 
+import com.polis.hospitalmanagement.entity.Department;
 import com.polis.hospitalmanagement.entity.Patient;
+import com.polis.hospitalmanagement.repository.DepartmentRepository;
 import com.polis.hospitalmanagement.repository.PatientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,9 @@ class PatientServiceTest {
     @Mock
     private PatientRepository patientRepository;
 
+    @Mock
+    private DepartmentRepository departmentRepository;
+
     @InjectMocks
     private PatientService patientService;
 
@@ -33,16 +38,23 @@ class PatientServiceTest {
         patient.setFirstName("John");
         patient.setLastName("Doe");
 
-        when(patientRepository.save(patient)).thenReturn(patient);
+        Long departmentId = 1L; // Mock department ID
+        Department mockDepartment = new Department();
+        mockDepartment.setId(departmentId);
+        mockDepartment.setName("Cardiology");
+
+        when(departmentRepository.findById(departmentId)).thenReturn(Optional.of(mockDepartment));  // ✅ Mock department lookup
+        when(patientRepository.save(any(Patient.class))).thenReturn(patient);
 
         // Act
-        Patient result = patientService.createPatient(patient);
+        Patient result = patientService.createPatient(patient, departmentId);  // ✅ Pass department ID
 
         // Assert
         assertNotNull(result);
         assertEquals("John", result.getFirstName());
         assertEquals("Doe", result.getLastName());
     }
+
 
     @Test
     void testGetPatientById_NotFound() {

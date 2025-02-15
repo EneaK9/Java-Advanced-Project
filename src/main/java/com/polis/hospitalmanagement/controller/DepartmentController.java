@@ -3,6 +3,8 @@ package com.polis.hospitalmanagement.controller;
 import com.polis.hospitalmanagement.entity.Department;
 import com.polis.hospitalmanagement.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,8 @@ public class DepartmentController {
 
     @PostMapping
     public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
-        return ResponseEntity.ok(departmentService.createDepartment(department));
+        Department savedDepartment = departmentService.createDepartment(department);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDepartment);
     }
 
     @PutMapping("/{id}")

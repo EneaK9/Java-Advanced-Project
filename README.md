@@ -69,7 +69,7 @@ cd hospital-management
 Create a MySQL database named `hospital_management` and configure the credentials in `application.properties`:
 ```properties
 # Database Configuration
-spring.datasource.url=jdbc:mysql://localhost:3306/hospital_management
+spring.datasource.url=jdbc:mysql://localhost:3306/hospital_db
 spring.datasource.username=root
 spring.datasource.password=yourpassword
 
@@ -150,23 +150,15 @@ mvn test
 
 Sample output:
 ```
-[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
 [INFO] BUILD SUCCESS
 ```
 
 ---
 
-## Screenshots
-### Postman API Tests
-![Postman Tests](https://via.placeholder.com/800x400 "Postman Tests Screenshot")
-
-### Unit Test Results
-![JUnit Tests](https://via.placeholder.com/800x400 "JUnit Tests Screenshot")
-
----
-
 ## Contributors
-- **Your Name** - [your-email@example.com](mailto:your-email@example.com)
+- **Enea Kuca** 
+- **Era Bendaj** 
 
 ---
 

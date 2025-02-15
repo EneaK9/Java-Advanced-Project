@@ -24,6 +24,9 @@ public class DepartmentService {
     }
 
     public Department createDepartment(Department department) {
+        if (departmentRepository.existsByName(department.getName())) {
+            throw new RuntimeException("Department name already exists");
+        }
         return departmentRepository.save(department);
     }
 
@@ -37,9 +40,10 @@ public class DepartmentService {
     public void deleteDepartment(Long id) {
         Department department = getDepartmentById(id);
         if (!department.getPatients().isEmpty()) {
-            throw new RuntimeException("Cannot delete department with associated patients.");
+            throw new RuntimeException("Cannot delete department: Patients are assigned to this department.");
         }
         departmentRepository.delete(department);
     }
+
 }
 

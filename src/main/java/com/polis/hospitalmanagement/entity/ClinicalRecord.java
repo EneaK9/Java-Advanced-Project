@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class ClinicalRecord {
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
+    @JsonBackReference
     private Patient patient;
 
     private LocalDate recordDate;
@@ -55,5 +57,12 @@ public class ClinicalRecord {
 
     public void setClinicalNotes(String clinicalNotes) {
         this.clinicalNotes = clinicalNotes;
+    }
+
+    public String getNotes() {
+        return null;
+    }
+
+    public void setNotes(String s) {
     }
 }
