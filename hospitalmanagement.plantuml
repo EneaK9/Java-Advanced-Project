@@ -1,0 +1,161 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Admission {
+   notes: String
+   admissionDate: LocalDate
+   id: Long
+   patient: Patient
+   dischargeDate: LocalDate
+   dischargeReason: DischargeReason
+}
+class AdmissionController {
+   allAdmissions: List<Admission>
+}
+class AdmissionDTO {
+   notes: String
+   admissionDate: LocalDate
+   patientId: Long
+   id: Long
+}
+class AdmissionNotFoundException
+interface AdmissionRepository << interface >>
+class AdmissionService {
+   allAdmissions: List<Admission>
+}
+class ClinicalRecord {
+   notes: String
+   recordDate: LocalDate
+   id: Long
+   patient: Patient
+   clinicalNotes: String
+}
+class ClinicalRecordController {
+   allClinicalRecords: List<ClinicalRecord>
+}
+class ClinicalRecordDTO {
+   patientId: Long
+   recordDate: LocalDate
+   id: Long
+   clinicalNotes: String
+}
+class ClinicalRecordNotFoundException
+interface ClinicalRecordRepository << interface >>
+class ClinicalRecordService {
+   allClinicalRecords: List<ClinicalRecord>
+}
+class Department {
+   name: String
+   description: String
+   patients: List<Patient>
+   id: Long
+}
+class DepartmentController {
+   allDepartments: List<Department>
+}
+class DepartmentDTO {
+   name: String
+   description: String
+   id: Long
+}
+class DepartmentNotFoundException
+interface DepartmentRepository << interface >>
+class DepartmentService {
+   allDepartments: List<Department>
+}
+class Discharge {
+   dischargeDate: LocalDateTime
+   notes: String
+   id: Long
+   patient: Patient
+   dischargeReason: DischargeReason
+}
+class DischargeController {
+   allDischarges: List<Discharge>
+}
+class DischargeDTO {
+   dischargeDate: LocalDateTime
+   notes: String
+   patientId: Long
+   id: Long
+   dischargeReasonEnum: DischargeReason
+   dischargeReason: String
+}
+enum DischargeReason << enumeration >>
+enum DischargeReason << enumeration >>
+interface DischargeRepository << interface >>
+class DischargeService {
+   allDischarges: List<Discharge>
+}
+class GlobalExceptionHandler
+class GlobalExceptionHandler
+class HospitalManagementApplication
+class Patient {
+   lastName: String
+   dateOfBirth: String
+   admissions: List<Admission>
+   id: Long
+   phone: String
+   clinicalRecords: List<ClinicalRecord>
+   firstName: String
+   department: Department
+   address: String
+}
+class PatientController {
+   allPatients: List<PatientDTO>
+}
+class PatientDTO {
+   lastName: String
+   dateOfBirth: String
+   id: Long
+   phone: String
+   firstName: String
+   address: String
+   departmentId: Long
+}
+interface PatientRepository << interface >>
+class PatientService {
+   allPatients: List<Patient>
+}
+
+Admission                       "1" *-[#595959,plain]-> "dischargeReason\n1" DischargeReason                 
+Admission                       "1" *-[#595959,plain]-> "patient\n1" Patient                         
+AdmissionController              -[#595959,dashed]->  AdmissionDTO                    : "«create»"
+AdmissionController             "1" *-[#595959,plain]-> "admissionService\n1" AdmissionService                
+AdmissionService                 -[#595959,dashed]->  Admission                       : "«create»"
+AdmissionService                 -[#595959,dashed]->  AdmissionNotFoundException      : "«create»"
+AdmissionService                "1" *-[#595959,plain]-> "admissionRepository\n1" AdmissionRepository             
+AdmissionService                "1" *-[#595959,plain]-> "patientRepository\n1" PatientRepository               
+ClinicalRecord                  "1" *-[#595959,plain]-> "patient\n1" Patient                         
+ClinicalRecordController         -[#595959,dashed]->  ClinicalRecordDTO               : "«create»"
+ClinicalRecordController        "1" *-[#595959,plain]-> "clinicalRecordService\n1" ClinicalRecordService           
+ClinicalRecordService            -[#595959,dashed]->  ClinicalRecord                  : "«create»"
+ClinicalRecordService            -[#595959,dashed]->  ClinicalRecordNotFoundException : "«create»"
+ClinicalRecordService           "1" *-[#595959,plain]-> "clinicalRecordRepository\n1" ClinicalRecordRepository        
+ClinicalRecordService           "1" *-[#595959,plain]-> "patientRepository\n1" PatientRepository               
+Department                      "1" *-[#595959,plain]-> "patients\n*" Patient                         
+DepartmentController             -[#595959,dashed]->  DepartmentDTO                   : "«create»"
+DepartmentController            "1" *-[#595959,plain]-> "departmentService\n1" DepartmentService               
+DepartmentService                -[#595959,dashed]->  Department                      : "«create»"
+DepartmentService               "1" *-[#595959,plain]-> "departmentRepository\n1" DepartmentRepository            
+Discharge                       "1" *-[#595959,plain]-> "dischargeReason\n1" DischargeReason                 
+Discharge                       "1" *-[#595959,plain]-> "patient\n1" Patient                         
+DischargeController              -[#595959,dashed]->  DischargeDTO                    : "«create»"
+DischargeController             "1" *-[#595959,plain]-> "dischargeService\n1" DischargeService                
+DischargeReason                  +-[#820000,plain]-  Admission                       
+DischargeService                 -[#595959,dashed]->  Discharge                       : "«create»"
+DischargeService                "1" *-[#595959,plain]-> "dischargeRepository\n1" DischargeRepository             
+DischargeService                "1" *-[#595959,plain]-> "patientRepository\n1" PatientRepository               
+GlobalExceptionHandler           +-[#820000,plain]-  HospitalManagementApplication   
+Patient                         "1" *-[#595959,plain]-> "admissions\n*" Admission                       
+Patient                         "1" *-[#595959,plain]-> "clinicalRecords\n*" ClinicalRecord                  
+Patient                         "1" *-[#595959,plain]-> "department\n1" Department                      
+PatientController                -[#595959,dashed]->  PatientDTO                      : "«create»"
+PatientController               "1" *-[#595959,plain]-> "patientService\n1" PatientService                  
+PatientService                  "1" *-[#595959,plain]-> "departmentRepository\n1" DepartmentRepository            
+PatientService                   -[#595959,dashed]->  Patient                         : "«create»"
+PatientService                  "1" *-[#595959,plain]-> "patientRepository\n1" PatientRepository               
+@enduml

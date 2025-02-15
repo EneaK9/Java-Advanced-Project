@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/HomePC/Desktop/Projects/hospital-management/hospital-management/src/main/java/com/polis/hospitalmanagement</OriginalElement>
+  <nodes>
+    <node x="1841.0" y="1686.0">com.polis.hospitalmanagement.HospitalManagementApplication</node>
+    <node x="428.5" y="746.0">com.polis.hospitalmanagement.exception.AdmissionNotFoundException</node>
+    <node x="764.5" y="1286.0">com.polis.hospitalmanagement.repository.DischargeRepository</node>
+    <node x="1130.0" y="1888.5">com.polis.hospitalmanagement.controller.DischargeController</node>
+    <node x="1276.5" y="108.5">com.polis.hospitalmanagement.entity.Admission</node>
+    <node x="1357.5" y="-14.0">com.polis.hospitalmanagement.entity.Admission.DischargeReason</node>
+    <node x="1679.5" y="1508.5">com.polis.hospitalmanagement.controller.DepartmentController</node>
+    <node x="-155.5" y="1268.5">com.polis.hospitalmanagement.service.ClinicalRecordService</node>
+    <node x="318.5" y="320.5">com.polis.hospitalmanagement.entity.ClinicalRecord</node>
+    <node x="1696.0" y="332.5">com.polis.hospitalmanagement.entity.Department</node>
+    <node x="837.0" y="746.0">com.polis.hospitalmanagement.repository.PatientRepository</node>
+    <node x="-66.0" y="746.0">com.polis.hospitalmanagement.exception.ClinicalRecordNotFoundException</node>
+    <node x="623.0" y="586.0">com.polis.hospitalmanagement.repository.AdmissionRepository</node>
+    <node x="467.5" y="1268.5">com.polis.hospitalmanagement.service.AdmissionService</node>
+    <node x="1639.5" y="1268.5">com.polis.hospitalmanagement.service.DepartmentService</node>
+    <node x="1036.5" y="1220.5">com.polis.hospitalmanagement.entity.Discharge</node>
+    <node x="1159.5" y="1448.5">com.polis.hospitalmanagement.dto.DischargeDTO</node>
+    <node x="1198.0" y="586.0">com.polis.hospitalmanagement.repository.DepartmentRepository</node>
+    <node x="1663.5" y="1906.0">com.polis.hospitalmanagement.exception.DepartmentNotFoundException</node>
+    <node x="1872.5" y="1826.0">com.polis.hospitalmanagement.HospitalManagementApplication.GlobalExceptionHandler</node>
+    <node x="1452.5" y="632.5">com.polis.hospitalmanagement.entity.Patient</node>
+    <node x="191.5" y="1232.5">com.polis.hospitalmanagement.dto.ClinicalRecordDTO</node>
+    <node x="307.0" y="1012.5">com.polis.hospitalmanagement.dto.AdmissionDTO</node>
+    <node x="1512.5" y="1826.0">com.polis.hospitalmanagement.exception.GlobalExceptionHandler</node>
+    <node x="1246.5" y="976.5">com.polis.hospitalmanagement.dto.PatientDTO</node>
+    <node x="1389.5" y="1268.5">com.polis.hospitalmanagement.service.PatientService</node>
+    <node x="950.0" y="1668.5">com.polis.hospitalmanagement.service.DischargeService</node>
+    <node x="148.5" y="586.0">com.polis.hospitalmanagement.repository.ClinicalRecordRepository</node>
+    <node x="547.5" y="1508.5">com.polis.hospitalmanagement.controller.AdmissionController</node>
+    <node x="64.5" y="1668.5">com.polis.hospitalmanagement.controller.ClinicalRecordController</node>
+    <node x="1436.0" y="1668.5">com.polis.hospitalmanagement.controller.PatientController</node>
+    <node x="1077.5" y="746.0">com.polis.hospitalmanagement.entity.DischargeReason</node>
+    <node x="1961.0" y="1244.5">com.polis.hospitalmanagement.dto.DepartmentDTO</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.polis.hospitalmanagement.service.PatientService" target="com.polis.hospitalmanagement.entity.Patient" relationship="CREATE">
+      <point x="50.25" y="-31.5" />
+      <point x="1540.25" y="1220.0" />
+      <point x="1590.0" y="1220.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.ClinicalRecordService" target="com.polis.hospitalmanagement.repository.ClinicalRecordRepository" relationship="TO_ONE">
+      <point x="72.75" y="-31.5" />
+      <point x="62.75" y="1220.0" />
+      <point x="270.0" y="1220.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.DepartmentService" target="com.polis.hospitalmanagement.entity.Department" relationship="CREATE">
+      <point x="65.25" y="-31.5" />
+      <point x="1835.25" y="1220.0" />
+      <point x="1830.0" y="1220.0" />
+      <point x="1830.0" y="740.0" />
+      <point x="1837.0" y="740.0" />
+      <point x="47.0" y="67.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Patient" target="com.polis.hospitalmanagement.entity.Admission" relationship="TO_MANY">
+      <point x="0.0" y="-127.5" />
+      <point x="1590.0" y="520.0" />
+      <point x="1476.75" y="520.0" />
+      <point x="66.75" y="91.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.PatientController" target="com.polis.hospitalmanagement.dto.PatientDTO" relationship="CREATE">
+      <point x="-57.0" y="-31.5" />
+      <point x="1493.0" y="1420.0" />
+      <point x="1330.0" y="1420.0" />
+      <point x="0.0" y="103.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.AdmissionService" target="com.polis.hospitalmanagement.exception.AdmissionNotFoundException" relationship="CREATE">
+      <point x="-61.25" y="-31.5" />
+      <point x="528.75" y="1240.0" />
+      <point x="530.0" y="1240.0" />
+      <point x="530.0" y="800.0" />
+      <point x="570.0" y="800.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.DepartmentController" target="com.polis.hospitalmanagement.service.DepartmentService" relationship="TO_ONE">
+      <point x="-65.25" y="-31.5" />
+      <point x="1744.75" y="1460.0" />
+      <point x="1930.0" y="1460.0" />
+      <point x="1930.0" y="1240.0" />
+      <point x="1704.75" y="1240.0" />
+      <point x="-65.25" y="-31.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.DischargeController" target="com.polis.hospitalmanagement.dto.DischargeDTO" relationship="CREATE">
+      <point x="60.0" y="-31.5" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.AdmissionService" target="com.polis.hospitalmanagement.repository.AdmissionRepository" relationship="TO_ONE">
+      <point x="61.25" y="-31.5" />
+      <point x="651.25" y="1220.0" />
+      <point x="730.0" y="1220.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Discharge" target="com.polis.hospitalmanagement.entity.DischargeReason" relationship="TO_ONE">
+      <point x="0.0" y="-79.5" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Discharge" target="com.polis.hospitalmanagement.entity.Patient" relationship="TO_ONE">
+      <point x="0.0" y="-79.5" />
+      <point x="1170.0" y="1200.0" />
+      <point x="1050.0" y="1200.0" />
+      <point x="1050.0" y="560.0" />
+      <point x="1590.0" y="560.0" />
+      <point x="0.0" y="-127.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.ClinicalRecordService" target="com.polis.hospitalmanagement.repository.PatientRepository" relationship="TO_ONE">
+      <point x="72.75" y="-31.5" />
+      <point x="62.75" y="1220.0" />
+      <point x="270.0" y="1220.0" />
+      <point x="270.0" y="820.0" />
+      <point x="930.0" y="820.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.DischargeService" target="com.polis.hospitalmanagement.repository.PatientRepository" relationship="TO_ONE">
+      <point x="-60.0" y="-31.5" />
+      <point x="1010.0" y="1260.0" />
+      <point x="930.0" y="1260.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.HospitalManagementApplication.GlobalExceptionHandler" target="com.polis.hospitalmanagement.HospitalManagementApplication" relationship="INNER_CLASS">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.AdmissionService" target="com.polis.hospitalmanagement.entity.Admission" relationship="CREATE">
+      <point x="-61.25" y="-31.5" />
+      <point x="528.75" y="1240.0" />
+      <point x="530.0" y="1240.0" />
+      <point x="530.0" y="800.0" />
+      <point x="410.0" y="800.0" />
+      <point x="410.0" y="540.0" />
+      <point x="1343.25" y="540.0" />
+      <point x="-66.75" y="91.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.ClinicalRecordService" target="com.polis.hospitalmanagement.entity.ClinicalRecord" relationship="CREATE">
+      <point x="-72.75" y="-31.5" />
+      <point x="-82.75" y="1240.0" />
+      <point x="-90.0" y="1240.0" />
+      <point x="-90.0" y="560.0" />
+      <point x="364.25" y="560.0" />
+      <point x="-45.75" y="79.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.DischargeController" target="com.polis.hospitalmanagement.service.DischargeService" relationship="TO_ONE">
+      <point x="-60.0" y="-31.5" />
+      <point x="1190.0" y="1860.0" />
+      <point x="930.0" y="1860.0" />
+      <point x="930.0" y="1640.0" />
+      <point x="1010.0" y="1640.0" />
+      <point x="-60.0" y="-31.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.DischargeService" target="com.polis.hospitalmanagement.entity.Discharge" relationship="CREATE">
+      <point x="60.0" y="-31.5" />
+      <point x="1130.0" y="1420.0" />
+      <point x="1170.0" y="1420.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.PatientController" target="com.polis.hospitalmanagement.service.PatientService" relationship="TO_ONE">
+      <point x="57.0" y="-31.5" />
+      <point x="1607.0" y="1640.0" />
+      <point x="1610.0" y="1640.0" />
+      <point x="1610.0" y="1240.0" />
+      <point x="1439.75" y="1240.0" />
+      <point x="-50.25" y="-31.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.DischargeService" target="com.polis.hospitalmanagement.repository.DischargeRepository" relationship="TO_ONE">
+      <point x="-60.0" y="-31.5" />
+      <point x="1010.0" y="1620.0" />
+      <point x="870.0" y="1620.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.ClinicalRecordController" target="com.polis.hospitalmanagement.dto.ClinicalRecordDTO" relationship="CREATE">
+      <point x="72.75" y="-31.5" />
+      <point x="282.75" y="1640.0" />
+      <point x="290.0" y="1640.0" />
+      <point x="0.0" y="67.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Admission" target="com.polis.hospitalmanagement.entity.Admission.DischargeReason" relationship="TO_ONE">
+      <point x="66.75" y="91.5" />
+      <point x="1476.75" y="420.0" />
+      <point x="1570.0" y="420.0" />
+      <point x="1570.0" y="80.0" />
+      <point x="1496.25" y="80.0" />
+      <point x="46.25" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.ClinicalRecordService" target="com.polis.hospitalmanagement.exception.ClinicalRecordNotFoundException" relationship="CREATE">
+      <point x="-72.75" y="-31.5" />
+      <point x="-82.75" y="1240.0" />
+      <point x="-90.0" y="1240.0" />
+      <point x="-90.0" y="800.0" />
+      <point x="90.0" y="800.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.AdmissionController" target="com.polis.hospitalmanagement.dto.AdmissionDTO" relationship="CREATE">
+      <point x="-61.25" y="-31.5" />
+      <point x="608.75" y="1480.0" />
+      <point x="410.0" y="1480.0" />
+      <point x="0.0" y="67.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.ClinicalRecordController" target="com.polis.hospitalmanagement.service.ClinicalRecordService" relationship="TO_ONE">
+      <point x="-72.75" y="-31.5" />
+      <point x="137.25" y="1640.0" />
+      <point x="170.0" y="1640.0" />
+      <point x="170.0" y="1240.0" />
+      <point x="62.75" y="1240.0" />
+      <point x="72.75" y="-31.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.AdmissionController" target="com.polis.hospitalmanagement.service.AdmissionService" relationship="TO_ONE">
+      <point x="61.25" y="-31.5" />
+      <point x="731.25" y="1480.0" />
+      <point x="730.0" y="1480.0" />
+      <point x="730.0" y="1240.0" />
+      <point x="651.25" y="1240.0" />
+      <point x="61.25" y="-31.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Admission.DischargeReason" target="com.polis.hospitalmanagement.entity.Admission" relationship="INNER_CLASS">
+      <point x="-46.25" y="14.0" />
+      <point x="1403.75" y="80.0" />
+      <point x="1410.0" y="80.0" />
+      <point x="0.0" y="-91.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.ClinicalRecord" target="com.polis.hospitalmanagement.entity.Patient" relationship="TO_ONE">
+      <point x="45.75" y="79.5" />
+      <point x="455.75" y="500.0" />
+      <point x="1510.0" y="500.0" />
+      <point x="1510.0" y="600.0" />
+      <point x="1590.0" y="600.0" />
+      <point x="0.0" y="-127.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.PatientService" target="com.polis.hospitalmanagement.repository.PatientRepository" relationship="TO_ONE">
+      <point x="-50.25" y="-31.5" />
+      <point x="1439.75" y="1220.0" />
+      <point x="1430.0" y="1220.0" />
+      <point x="1430.0" y="920.0" />
+      <point x="930.0" y="920.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.controller.DepartmentController" target="com.polis.hospitalmanagement.dto.DepartmentDTO" relationship="CREATE">
+      <point x="65.25" y="-31.5" />
+      <point x="1875.25" y="1480.0" />
+      <point x="2050.0" y="1480.0" />
+      <point x="0.0" y="55.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Admission" target="com.polis.hospitalmanagement.entity.Patient" relationship="TO_ONE">
+      <point x="66.75" y="91.5" />
+      <point x="1476.75" y="500.0" />
+      <point x="1510.0" y="500.0" />
+      <point x="1510.0" y="600.0" />
+      <point x="1590.0" y="600.0" />
+      <point x="0.0" y="-127.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Patient" target="com.polis.hospitalmanagement.entity.ClinicalRecord" relationship="TO_MANY">
+      <point x="0.0" y="-127.5" />
+      <point x="1590.0" y="520.0" />
+      <point x="455.75" y="520.0" />
+      <point x="45.75" y="79.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.DepartmentService" target="com.polis.hospitalmanagement.repository.DepartmentRepository" relationship="TO_ONE">
+      <point x="-65.25" y="-31.5" />
+      <point x="1704.75" y="900.0" />
+      <point x="1430.0" y="900.0" />
+      <point x="1430.0" y="780.0" />
+      <point x="1310.0" y="780.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.AdmissionService" target="com.polis.hospitalmanagement.repository.PatientRepository" relationship="TO_ONE">
+      <point x="61.25" y="-31.5" />
+      <point x="651.25" y="1220.0" />
+      <point x="730.0" y="1220.0" />
+      <point x="730.0" y="1200.0" />
+      <point x="930.0" y="1200.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Patient" target="com.polis.hospitalmanagement.entity.Department" relationship="TO_ONE">
+      <point x="0.0" y="-127.5" />
+      <point x="1590.0" y="520.0" />
+      <point x="1743.0" y="520.0" />
+      <point x="-47.0" y="67.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.entity.Department" target="com.polis.hospitalmanagement.entity.Patient" relationship="TO_MANY">
+      <point x="-47.0" y="67.5" />
+      <point x="1743.0" y="500.0" />
+      <point x="1510.0" y="500.0" />
+      <point x="1510.0" y="600.0" />
+      <point x="1590.0" y="600.0" />
+      <point x="0.0" y="-127.5" />
+    </edge>
+    <edge source="com.polis.hospitalmanagement.service.PatientService" target="com.polis.hospitalmanagement.repository.DepartmentRepository" relationship="TO_ONE">
+      <point x="-50.25" y="-31.5" />
+      <point x="1439.75" y="1220.0" />
+      <point x="1430.0" y="1220.0" />
+      <point x="1430.0" y="780.0" />
+      <point x="1310.0" y="780.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.34088620342396775" showDependencies="true" x="991.5000000000002" y="969.0000000000001" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
