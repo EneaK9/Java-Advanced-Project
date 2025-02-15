@@ -1,9 +1,11 @@
 package com.polis.hospitalmanagement.controller;
 
+import com.polis.hospitalmanagement.dto.AdmissionDTO;
 import com.polis.hospitalmanagement.entity.Admission;
 import com.polis.hospitalmanagement.service.AdmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,21 +30,28 @@ public class AdmissionController {
         return ResponseEntity.ok(admissionService.getAdmissionById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Admission> createAdmission(@RequestBody Map<String, Object> request) {
-        Long patientId = Long.valueOf(request.get("patientId").toString());
-        LocalDate admissionDate = LocalDate.parse(request.get("admissionDate").toString());
-        String notes = (String) request.get("notes");
-
-        Admission admission = admissionService.createAdmission(patientId, admissionDate, notes);
-        return ResponseEntity.status(HttpStatus.CREATED).body(admission);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AdmissionDTO> createAdmission(@RequestBody AdmissionDTO admissionDTO) {
+        Admission savedAdmission = admissionService.createAdmission(admissionDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AdmissionDTO(
+                savedAdmission.getId(),
+                savedAdmission.getPatient().getId(),
+                savedAdmission.getAdmissionDate(),
+                savedAdmission.getNotes()
+        ));
     }
-
 
     @PutMapping("/{id}")
-    public ResponseEntity<Admission> updateAdmission(@PathVariable Long id, @RequestBody Admission admission) {
-        return ResponseEntity.ok(admissionService.updateAdmission(id, admission));
+    public ResponseEntity<AdmissionDTO> updateAdmission(@PathVariable Long id, @RequestBody AdmissionDTO admissionDTO) {
+        Admission updatedAdmission = admissionService.updateAdmission(id, admissionDTO);
+        return ResponseEntity.ok(new AdmissionDTO(
+                updatedAdmission.getId(),
+                updatedAdmission.getPatient().getId(),
+                updatedAdmission.getAdmissionDate(),
+                updatedAdmission.getNotes()
+        ));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAdmission(@PathVariable Long id) {

@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.service;
 
+import com.polis.hospitalmanagement.dto.PatientDTO;
 import com.polis.hospitalmanagement.entity.Department;
 import com.polis.hospitalmanagement.entity.Patient;
 import com.polis.hospitalmanagement.repository.DepartmentRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientService {
@@ -24,30 +26,44 @@ public class PatientService {
     }
 
     public Patient getPatientById(Long id) {
-        return patientRepository.findById(id).orElseThrow(() -> new RuntimeException("Patient not found"));
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
     }
 
-    public Patient createPatient(Patient patient, Long departmentId) {
-        Department department = departmentRepository.findById(departmentId)
+    public Patient createPatient(PatientDTO patientDTO) {
+        Patient patient = new Patient();
+        patient.setFirstName(patientDTO.getFirstName());
+        patient.setLastName(patientDTO.getLastName());
+
+        // Convert String to LocalDate only if dateOfBirth is not null
+        if (patientDTO.getDateOfBirth() != null) {
+            patient.setDateOfBirth(String.valueOf(LocalDate.parse(patientDTO.getDateOfBirth())));
+        }
+
+        patient.setAddress(patientDTO.getAddress());
+        patient.setPhone(patientDTO.getPhone());
+
+        // Fetch the department from the database
+        Department department = departmentRepository.findById(patientDTO.getDepartmentId())
                 .orElseThrow(() -> new RuntimeException("Department not found"));
 
-        patient.setDepartment(department); // ✅ Ensure valid department
+        patient.setDepartment(department);
         return patientRepository.save(patient);
     }
 
-    public Patient updatePatient(Long id, String firstName, String lastName, String dateOfBirth, String address, String phone, Long departmentId) {
+
+    public Patient updatePatient(Long id, PatientDTO patientDTO) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
-        patient.setFirstName(firstName);
-        patient.setLastName(lastName);
-        patient.setDateOfBirth(String.valueOf(LocalDate.parse(dateOfBirth)));
-        patient.setAddress(address);
-        patient.setPhone(phone);
+        patient.setFirstName(patientDTO.getFirstName());
+        patient.setLastName(patientDTO.getLastName());
+        patient.setDateOfBirth(String.valueOf(LocalDate.parse(patientDTO.getDateOfBirth()))); // Ensure it's String -> LocalDate
+        patient.setAddress(patientDTO.getAddress());
+        patient.setPhone(patientDTO.getPhone());
 
-        Department department = departmentRepository.findById(departmentId)
+        Department department = departmentRepository.findById(patientDTO.getDepartmentId())
                 .orElseThrow(() -> new RuntimeException("Department not found"));
-
         patient.setDepartment(department);
 
         return patientRepository.save(patient);
@@ -55,6 +71,7 @@ public class PatientService {
 
 
     public void deletePatient(Long id) {
-        patientRepository.deleteById(id);
+        Patient patient = getPatientById(id);
+        patientRepository.delete(patient);
     }
 }

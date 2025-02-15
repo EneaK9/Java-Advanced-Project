@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.controller;
 
+import com.polis.hospitalmanagement.dto.PatientDTO;
 import com.polis.hospitalmanagement.entity.Patient;
 import com.polis.hospitalmanagement.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/patients")
@@ -19,42 +20,31 @@ public class PatientController {
     private PatientService patientService;
 
     @GetMapping
-    public List<Patient> getAllPatients() {
-        return patientService.getAllPatients();
+    public List<PatientDTO> getAllPatients() {
+        List<Patient> patients = patientService.getAllPatients();
+        return patients.stream().map(PatientDTO::new).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
-        return ResponseEntity.ok(patientService.getPatientById(id));
+    public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) {
+        Patient patient = patientService.getPatientById(id);
+        return ResponseEntity.ok(new PatientDTO(patient));  // Convert Entity to DTO
     }
 
-    @PostMapping
-    public ResponseEntity<Patient> createPatient(@RequestBody Map<String, Object> request) {
-        Patient patient = new Patient();
-        patient.setFirstName((String) request.get("firstName"));
-        patient.setLastName((String) request.get("lastName"));
-        patient.setDateOfBirth((String) request.get("dateOfBirth"));
-        patient.setAddress((String) request.get("address"));
-        patient.setPhone((String) request.get("phone"));
-
-        Long departmentId = Long.valueOf(request.get("departmentId").toString());
-        Patient savedPatient = patientService.createPatient(patient, departmentId);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedPatient);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
+        Patient savedPatient = patientService.createPatient(patientDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new PatientDTO(savedPatient));
     }
 
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Map<String, Object> request) {
-        String firstName = request.get("firstName").toString();
-        String lastName = request.get("lastName").toString();
-        String dateOfBirth = request.get("dateOfBirth").toString();
-        String address = request.get("address").toString();
-        String phone = request.get("phone").toString();
-        Long departmentId = Long.valueOf(request.get("departmentId").toString());
+    @PutMapping("/{id}")
+    public ResponseEntity<PatientDTO> updatePatient(
+            @PathVariable Long id,
+            @RequestBody PatientDTO patientDTO) {
 
-        Patient updatedPatient = patientService.updatePatient(id, firstName, lastName, dateOfBirth, address, phone, departmentId);
-        return ResponseEntity.ok(updatedPatient);
+        Patient updatedPatient = patientService.updatePatient(id, patientDTO);
+        return ResponseEntity.ok(new PatientDTO(updatedPatient));
     }
 
 

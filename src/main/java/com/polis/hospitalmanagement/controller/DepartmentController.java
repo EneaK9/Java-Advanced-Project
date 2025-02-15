@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.controller;
 
+import com.polis.hospitalmanagement.dto.DepartmentDTO;
 import com.polis.hospitalmanagement.entity.Department;
 import com.polis.hospitalmanagement.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +28,26 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getDepartmentById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
-        Department savedDepartment = departmentService.createDepartment(department);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedDepartment);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentDTO departmentDTO) {
+        Department savedDepartment = departmentService.createDepartment(departmentDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DepartmentDTO(
+                savedDepartment.getId(),
+                savedDepartment.getName(),
+                savedDepartment.getDescription()
+        ));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody Department department) {
-        return ResponseEntity.ok(departmentService.updateDepartment(id, department));
+    public ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDTO departmentDTO) {
+        Department updatedDepartment = departmentService.updateDepartment(id, departmentDTO);
+        return ResponseEntity.ok(new DepartmentDTO(
+                updatedDepartment.getId(),
+                updatedDepartment.getName(),
+                updatedDepartment.getDescription()
+        ));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {

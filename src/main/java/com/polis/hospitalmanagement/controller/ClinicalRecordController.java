@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.controller;
 
+import com.polis.hospitalmanagement.dto.ClinicalRecordDTO;
 import com.polis.hospitalmanagement.entity.ClinicalRecord;
 import com.polis.hospitalmanagement.service.ClinicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +30,26 @@ public class ClinicalRecordController {
         return ResponseEntity.ok(clinicalRecordService.getClinicalRecordById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<ClinicalRecord> createClinicalRecord(@RequestBody Map<String, Object> request) {
-        Long patientId = Long.valueOf(request.get("patientId").toString());
-        LocalDate recordDate = LocalDate.parse(request.get("recordDate").toString());
-        String clinicalNotes = (String) request.get("clinicalNotes");
-
-        ClinicalRecord clinicalRecord = clinicalRecordService.createClinicalRecord(patientId, recordDate, clinicalNotes);
-        return ResponseEntity.status(HttpStatus.CREATED).body(clinicalRecord);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClinicalRecordDTO> createClinicalRecord(@RequestBody ClinicalRecordDTO clinicalRecordDTO) {
+        ClinicalRecord savedRecord = clinicalRecordService.createClinicalRecord(clinicalRecordDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ClinicalRecordDTO(
+                savedRecord.getId(),
+                savedRecord.getRecordDate(),
+                savedRecord.getClinicalNotes(),
+                savedRecord.getPatient().getId()
+        ));
     }
 
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClinicalRecord> updateClinicalRecord(@PathVariable Long id, @RequestBody Map<String, Object> request) {
-        LocalDate recordDate = LocalDate.parse(request.get("recordDate").toString());
-        String clinicalNotes = request.get("clinicalNotes").toString();
-
-        ClinicalRecord updatedRecord = clinicalRecordService.updateClinicalRecord(id, recordDate, clinicalNotes);
-        return ResponseEntity.ok(updatedRecord);
+    @PutMapping("/{id}")
+    public ResponseEntity<ClinicalRecordDTO> updateClinicalRecord(@PathVariable Long id, @RequestBody ClinicalRecordDTO clinicalRecordDTO) {
+        ClinicalRecord updatedRecord = clinicalRecordService.updateClinicalRecord(id, clinicalRecordDTO);
+        return ResponseEntity.ok(new ClinicalRecordDTO(
+                updatedRecord.getId(),
+                updatedRecord.getRecordDate(),
+                updatedRecord.getClinicalNotes(),
+                updatedRecord.getPatient().getId()
+        ));
     }
 
 

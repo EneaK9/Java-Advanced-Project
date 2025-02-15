@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.service;
 
+import com.polis.hospitalmanagement.dto.PatientDTO;
 import com.polis.hospitalmanagement.entity.Department;
 import com.polis.hospitalmanagement.entity.Patient;
 import com.polis.hospitalmanagement.repository.DepartmentRepository;
@@ -32,22 +33,17 @@ class PatientServiceTest {
     }
 
     @Test
-    void testCreatePatient() {
+    void testGetPatientById() {
         // Arrange
         Patient patient = new Patient();
+        patient.setId(1L);
         patient.setFirstName("John");
         patient.setLastName("Doe");
 
-        Long departmentId = 1L; // Mock department ID
-        Department mockDepartment = new Department();
-        mockDepartment.setId(departmentId);
-        mockDepartment.setName("Cardiology");
-
-        when(departmentRepository.findById(departmentId)).thenReturn(Optional.of(mockDepartment));  // ✅ Mock department lookup
-        when(patientRepository.save(any(Patient.class))).thenReturn(patient);
+        when(patientRepository.findById(1L)).thenReturn(Optional.of(patient));
 
         // Act
-        Patient result = patientService.createPatient(patient, departmentId);  // ✅ Pass department ID
+        PatientDTO result = new PatientDTO(patientService.getPatientById(1L)); // Convert to DTO
 
         // Assert
         assertNotNull(result);

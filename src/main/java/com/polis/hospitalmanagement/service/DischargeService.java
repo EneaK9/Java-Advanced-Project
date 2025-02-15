@@ -1,6 +1,7 @@
 package com.polis.hospitalmanagement.service;
 
 import com.polis.hospitalmanagement.entity.Discharge;
+import com.polis.hospitalmanagement.dto.DischargeDTO;
 import com.polis.hospitalmanagement.entity.DischargeReason;
 import com.polis.hospitalmanagement.entity.Patient;
 import com.polis.hospitalmanagement.repository.DischargeRepository;
@@ -29,31 +30,39 @@ public class DischargeService {
                 .orElseThrow(() -> new RuntimeException("Discharge not found"));
     }
 
-    public Discharge createDischarge(Long patientId, LocalDateTime dischargeDate, String dischargeReason, String notes) {
-        // Fetch the Patient object from the database
-        Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
-
-        // Create and set the Discharge object
+    public Discharge createDischarge(DischargeDTO dischargeDTO) {
         Discharge discharge = new Discharge();
-        discharge.setPatient(patient); // ✅ Ensure patient exists
-        discharge.setDischargeDate(dischargeDate);
-        discharge.setReason(DischargeReason.valueOf(dischargeReason));
-        discharge.setNotes(notes);
+        discharge.setDischargeDate(dischargeDTO.getDischargeDate());
+        discharge.setDischargeReason(dischargeDTO.getDischargeReasonEnum()); // Convert String to Enum
+        discharge.setNotes(dischargeDTO.getNotes());
+
+        Patient patient = patientRepository.findById(dischargeDTO.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+        discharge.setPatient(patient);
 
         return dischargeRepository.save(discharge);
     }
 
-    public Discharge updateDischarge(Long id, LocalDateTime dischargeDate, String dischargeReason, String notes) {
+    public Discharge updateDischarge(Long id, DischargeDTO dischargeDTO) {
+        // Fetch the existing discharge record
         Discharge discharge = dischargeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Discharge record not found"));
+                .orElseThrow(() -> new RuntimeException("Discharge not found"));
 
-        discharge.setDischargeDate(dischargeDate);
-        discharge.setReason(DischargeReason.valueOf(dischargeReason));
-        discharge.setNotes(notes);
+        // Ensure the entity retains its ID
+        discharge.setId(id);
+
+        discharge.setDischargeDate(dischargeDTO.getDischargeDate());
+        discharge.setDischargeReason(DischargeReason.valueOf(dischargeDTO.getDischargeReason())); // Convert String to Enum
+        discharge.setNotes(dischargeDTO.getNotes());
+
+        // Ensure patient ID is valid
+        Patient patient = patientRepository.findById(dischargeDTO.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+        discharge.setPatient(patient);
 
         return dischargeRepository.save(discharge);
     }
+
 
 
     public void deleteDischarge(Long id) {

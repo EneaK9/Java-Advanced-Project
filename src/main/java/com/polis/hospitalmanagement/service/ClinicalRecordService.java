@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.service;
 
+import com.polis.hospitalmanagement.dto.ClinicalRecordDTO;
 import com.polis.hospitalmanagement.entity.ClinicalRecord;
 import com.polis.hospitalmanagement.entity.Patient;
 import com.polis.hospitalmanagement.exception.ClinicalRecordNotFoundException;
@@ -28,26 +29,24 @@ public class ClinicalRecordService {
         return clinicalRecordRepository.findById(id).orElseThrow(() -> new RuntimeException("Clinical record not found"));
     }
 
-    public ClinicalRecord createClinicalRecord(Long patientId, LocalDate recordDate, String clinicalNotes) {
-        // Fetch the Patient object from the database
-        Patient patient = patientRepository.findById(patientId)
+    public ClinicalRecord createClinicalRecord(ClinicalRecordDTO clinicalRecordDTO) {
+        Patient patient = patientRepository.findById(clinicalRecordDTO.getPatientId())
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
-        // Create and set the Clinical Record object
         ClinicalRecord clinicalRecord = new ClinicalRecord();
-        clinicalRecord.setPatient(patient); // ✅ Ensure patient exists
-        clinicalRecord.setRecordDate(recordDate);
-        clinicalRecord.setClinicalNotes(clinicalNotes);
+        clinicalRecord.setRecordDate(clinicalRecordDTO.getRecordDate());
+        clinicalRecord.setClinicalNotes(clinicalRecordDTO.getClinicalNotes());
+        clinicalRecord.setPatient(patient);
 
         return clinicalRecordRepository.save(clinicalRecord);
     }
 
-    public ClinicalRecord updateClinicalRecord(Long id, LocalDate recordDate, String clinicalNotes) {
+    public ClinicalRecord updateClinicalRecord(Long id, ClinicalRecordDTO clinicalRecordDTO) {
         ClinicalRecord clinicalRecord = clinicalRecordRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Clinical Record not found"));
+                .orElseThrow(() -> new RuntimeException("Clinical record not found"));
 
-        clinicalRecord.setRecordDate(recordDate);
-        clinicalRecord.setClinicalNotes(clinicalNotes);
+        clinicalRecord.setRecordDate(clinicalRecordDTO.getRecordDate());
+        clinicalRecord.setClinicalNotes(clinicalRecordDTO.getClinicalNotes());
 
         return clinicalRecordRepository.save(clinicalRecord);
     }

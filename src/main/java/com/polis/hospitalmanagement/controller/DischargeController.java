@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.controller;
 
+import com.polis.hospitalmanagement.dto.DischargeDTO;
 import com.polis.hospitalmanagement.entity.Discharge;
 import com.polis.hospitalmanagement.service.DischargeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,27 +31,30 @@ public class DischargeController {
     }
 
     @PostMapping
-    public ResponseEntity<Discharge> createDischarge(@RequestBody Map<String, Object> request) {
-        Long patientId = Long.valueOf(request.get("patientId").toString());
-        LocalDateTime dischargeDate = LocalDateTime.parse(request.get("dischargeDate").toString());
-        String dischargeReason = request.get("dischargeReason").toString();
-        String notes = request.get("notes").toString();
-
-        Discharge discharge = dischargeService.createDischarge(patientId, dischargeDate, dischargeReason, notes);
-        return ResponseEntity.status(HttpStatus.CREATED).body(discharge);
+    public ResponseEntity<DischargeDTO> createDischarge(@RequestBody DischargeDTO dischargeDTO) {
+        Discharge savedDischarge = dischargeService.createDischarge(dischargeDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new DischargeDTO(
+                        savedDischarge.getId(),
+                        savedDischarge.getDischargeDate(),
+                        savedDischarge.getDischargeReason().name(), // Convert Enum to String
+                        savedDischarge.getNotes(),
+                        savedDischarge.getPatient().getId()
+                )
+        );
     }
 
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Discharge> updateDischarge(@PathVariable Long id, @RequestBody Map<String, Object> request) {
-        LocalDateTime dischargeDate = LocalDateTime.parse(request.get("dischargeDate").toString());
-        String dischargeReason = request.get("dischargeReason").toString();
-        String notes = request.get("notes").toString();
-
-        Discharge updatedDischarge = dischargeService.updateDischarge(id, dischargeDate, dischargeReason, notes);
-        return ResponseEntity.ok(updatedDischarge);
+    @PutMapping("/{id}")
+    public ResponseEntity<DischargeDTO> updateDischarge(@PathVariable Long id, @RequestBody DischargeDTO dischargeDTO) {
+        Discharge updatedDischarge = dischargeService.updateDischarge(id, dischargeDTO);
+        return ResponseEntity.ok(new DischargeDTO(
+                updatedDischarge.getId(),
+                updatedDischarge.getDischargeDate(),
+                updatedDischarge.getDischargeReason().name(), // Convert Enum to String
+                updatedDischarge.getNotes(),
+                updatedDischarge.getPatient().getId()
+        ));
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteDischarge(@PathVariable Long id) {

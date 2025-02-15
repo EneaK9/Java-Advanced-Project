@@ -1,5 +1,6 @@
 package com.polis.hospitalmanagement.service;
 
+import com.polis.hospitalmanagement.dto.AdmissionDTO;
 import com.polis.hospitalmanagement.entity.Admission;
 import com.polis.hospitalmanagement.entity.Patient;
 import com.polis.hospitalmanagement.exception.AdmissionNotFoundException;
@@ -29,28 +30,32 @@ public class AdmissionService {
         return admissionRepository.findById(id).orElseThrow(() -> new RuntimeException("Admission not found"));
     }
 
-    public Admission createAdmission(Long patientId, LocalDate admissionDate, String notes) {
-        // Fetch the Patient object from the database
-        Patient patient = patientRepository.findById(patientId)
+    public Admission createAdmission(AdmissionDTO admissionDTO) {
+        Patient patient = patientRepository.findById(admissionDTO.getPatientId())
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
-        // Create and set the Admission object
         Admission admission = new Admission();
-        admission.setPatient(patient); // ✅ Assign the actual Patient object
-        admission.setAdmissionDate(admissionDate);
-        admission.setNotes(notes);
+        admission.setPatient(patient);
+        admission.setAdmissionDate(admissionDTO.getAdmissionDate());
+        admission.setNotes(admissionDTO.getNotes());
 
         return admissionRepository.save(admission);
     }
 
-    public Admission updateAdmission(Long id, Admission admissionDetails) {
-        Admission admission = getAdmissionById(id);
-        admission.setAdmissionDate(admissionDetails.getAdmissionDate());
-        admission.setDischargeDate(admissionDetails.getDischargeDate());
-        admission.setDischargeReason(admissionDetails.getDischargeReason());
-        admission.setNotes(admissionDetails.getNotes());
+    public Admission updateAdmission(Long id, AdmissionDTO admissionDTO) {
+        Admission admission = admissionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Admission not found"));
+
+        Patient patient = patientRepository.findById(admissionDTO.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+        admission.setPatient(patient);
+        admission.setAdmissionDate(admissionDTO.getAdmissionDate());
+        admission.setNotes(admissionDTO.getNotes());
+
         return admissionRepository.save(admission);
     }
+
 
     public void deleteAdmission(Long id) {
         admissionRepository.deleteById(id);

@@ -17,7 +17,7 @@ public class Discharge {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "reason", nullable = false)
-    private DischargeReason reason; // ENUM: DECEASED, HEALTHY, TRANSFERRED
+    private DischargeReason dischargeReason; // ENUM: DECEASED, HEALTHY, TRANSFERRED
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
@@ -46,13 +46,9 @@ public class Discharge {
     }
 
     // Getter and Setter for reason
-    public DischargeReason getReason() {
-        return reason;
-    }
+    public DischargeReason getDischargeReason() { return dischargeReason; }
 
-    public void setReason(DischargeReason reason) {
-        this.reason = reason;
-    }
+    public void setDischargeReason(DischargeReason dischargeReason) { this.dischargeReason = dischargeReason; }
 
     // Getter and Setter for patient
     public Patient getPatient() {
