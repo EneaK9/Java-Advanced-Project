@@ -2,6 +2,8 @@ package com.polis.hospitalmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -19,7 +21,7 @@ public class Discharge {
      * Stores the date when the patient was discharged.
      */
     @Column(name = "discharge_date", nullable = false)
-    private LocalDateTime dischargeDate;
+    private LocalDate dischargeDate;
 
     /**
      * Enum representing the possible reasons for discharge.
@@ -59,11 +61,11 @@ public class Discharge {
     }
 
     // Getter and Setter for dischargeDate
-    public LocalDateTime getDischargeDate() {
+    public LocalDate getDischargeDate() {
         return dischargeDate;
     }
 
-    public void setDischargeDate(LocalDateTime dischargeDate) {
+    public void setDischargeDate(LocalDate dischargeDate) {
         this.dischargeDate = dischargeDate;
     }
 

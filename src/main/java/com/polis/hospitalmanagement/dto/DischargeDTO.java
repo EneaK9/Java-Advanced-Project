@@ -4,7 +4,7 @@ import com.polis.hospitalmanagement.entity.DischargeReason;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * DTO class for transferring discharge data.
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class DischargeDTO {
     private Long id; // Unique identifier for the discharge record
-    private LocalDateTime dischargeDate;
+    private LocalDate dischargeDate;
     private String dischargeReason;
     private String notes;
     private Long patientId; // Reference to the patient
@@ -35,7 +35,7 @@ public class DischargeDTO {
      * @param notes Additional notes regarding the discharge.
      * @param patientId The ID of the patient associated with this discharge.
      */
-    public DischargeDTO(Long id, LocalDateTime dischargeDate, String dischargeReason, String notes, Long patientId) {
+    public DischargeDTO(Long id, LocalDate dischargeDate, String dischargeReason, String notes, Long patientId) {
         this.id = id;
         this.dischargeDate = dischargeDate;
         this.dischargeReason = dischargeReason; // Stored as a String for easier API communication
@@ -46,7 +46,7 @@ public class DischargeDTO {
         return id;
     }
 
-    public LocalDateTime getDischargeDate() {
+    public LocalDate getDischargeDate() {
         return dischargeDate;
     }
 

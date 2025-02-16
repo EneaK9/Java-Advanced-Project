@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class AdmissionDTO {
     private Long id;
     private Long patientId;
-    private LocalDateTime admissionDate;
+    private LocalDate admissionDate;
     private String notes;
 
     /**
@@ -30,7 +30,7 @@ public class AdmissionDTO {
      * @param admissionDate The date of admission.
      * @param notes Additional notes regarding the admission.
      */
-    public AdmissionDTO(Long id, Long patientId, LocalDateTime  admissionDate, String notes) {
+    public AdmissionDTO(Long id, Long patientId, LocalDate  admissionDate, String notes) {
         this.id = id;
         this.patientId = patientId;
         this.admissionDate = admissionDate;
@@ -40,7 +40,7 @@ public class AdmissionDTO {
         return patientId;
     }
 
-    public LocalDateTime getAdmissionDate() {  // Ensure this matches the field type
+    public LocalDate getAdmissionDate() {  // Ensure this matches the field type
         return admissionDate;
     }
 

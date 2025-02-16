@@ -33,7 +33,7 @@ public class Admission {
     @JsonBackReference
     private Patient patient;
 
-    private LocalDateTime admissionDate;
+    private LocalDate admissionDate;
 
     private LocalDate dischargeDate;
 
@@ -70,11 +70,11 @@ public class Admission {
         this.patient = patient;
     }
 
-    public LocalDateTime getAdmissionDate() {
+    public LocalDate getAdmissionDate() {
         return admissionDate;
     }
 
-    public void setAdmissionDate(LocalDateTime admissionDate) {
+    public void setAdmissionDate(LocalDate admissionDate) {
         this.admissionDate = admissionDate;
     }
 
