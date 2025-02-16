@@ -3,9 +3,11 @@ import com.polis.hospitalmanagement.entity.Patient;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-
-
-@NoArgsConstructor // Needed for Jackson deserialization
+/**
+ * DTO class for transferring patient data.
+ * It simplifies data transfer by excluding unnecessary fields.
+ */
+@NoArgsConstructor // Generates a no-args constructor
 @AllArgsConstructor
 public class PatientDTO {
     private Long id;

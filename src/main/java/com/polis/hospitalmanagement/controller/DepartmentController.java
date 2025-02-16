@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller responsible for handling departments.
+ */
 @RestController
 @RequestMapping("/api/departments")
 public class DepartmentController {
@@ -18,16 +21,30 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
+    /**
+     * Retrieves a list of all departments.
+     * @return List of all Department entities.
+     */
     @GetMapping
     public List<Department> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
 
+    /**
+     * Retrieves a department by its ID.
+     * @param id The ID of the department.
+     * @return ResponseEntity containing the Department entity.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable Long id) {
         return ResponseEntity.ok(departmentService.getDepartmentById(id));
     }
 
+    /**
+     * Creates a new department.
+     * @param departmentDTO The DepartmentDTO containing department details.
+     * @return ResponseEntity containing the created DepartmentDTO.
+     */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentDTO departmentDTO) {
         Department savedDepartment = departmentService.createDepartment(departmentDTO);
@@ -38,6 +55,12 @@ public class DepartmentController {
         ));
     }
 
+    /**
+     * Updates an existing department.
+     * @param id The ID of the department to update.
+     * @param departmentDTO The updated department details.
+     * @return ResponseEntity containing the updated DepartmentDTO.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDTO departmentDTO) {
         Department updatedDepartment = departmentService.updateDepartment(id, departmentDTO);
@@ -48,10 +71,14 @@ public class DepartmentController {
         ));
     }
 
-
+    /**
+     * Deletes a department by its ID.
+     * @param id The ID of the department to delete.
+     * @return ResponseEntity with no content.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
-        departmentService.deleteDepartment(id);
-        return ResponseEntity.noContent().build();
+        departmentService.deleteDepartment(id);   // Call service to delete department
+        return ResponseEntity.noContent().build(); // Return 204 No Content response
     }
 }

@@ -16,53 +16,66 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit test class for PatientService.
+ * Uses JUnit and Mockito for mocking dependencies.
+ */
 class PatientServiceTest {
 
-    @Mock
+    @Mock // Mocks the PatientRepository (prevents actual database interaction)
     private PatientRepository patientRepository;
 
-    @Mock
+    @Mock // Mocks the DepartmentRepository
     private DepartmentRepository departmentRepository;
 
-    @InjectMocks
+    @InjectMocks // Automatically injects the mock repositories into PatientService
     private PatientService patientService;
 
+    /**
+     * Initializes Mockito before each test.
+     */
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this); // Initializes the mocks
     }
 
+    /**
+     * Test case: When a patient exists, it should be found by ID.
+     */
     @Test
     void testGetPatientById() {
-        // Arrange
+        // Arrange: Create a new patient object
         Patient patient = new Patient();
-        patient.setId(1L);
-        patient.setFirstName("John");
-        patient.setLastName("Doe");
+        patient.setId(1L); // Assign an ID
+        patient.setFirstName("John"); // Assign a first name
+        patient.setLastName("Doe"); // Assign a last name
 
+        // Mocking repository behavior: When findById(1L) is called, return the patient object
         when(patientRepository.findById(1L)).thenReturn(Optional.of(patient));
 
-        // Act
-        PatientDTO result = new PatientDTO(patientService.getPatientById(1L)); // Convert to DTO
+        // Act: Call the service method and convert the returned patient to a DTO
+        PatientDTO result = new PatientDTO(patientService.getPatientById(1L));
 
-        // Assert
-        assertNotNull(result);
-        assertEquals("John", result.getFirstName());
-        assertEquals("Doe", result.getLastName());
+        // Assert: Verify expected behavior
+        assertNotNull(result); // Ensure that a patient is returned
+        assertEquals("John", result.getFirstName()); // Verify first name
+        assertEquals("Doe", result.getLastName()); // Verify last name
     }
 
-
+    /**
+     * Test case: When a patient does not exist, an exception should be thrown.
+     */
     @Test
     void testGetPatientById_NotFound() {
-        // Arrange
+        // Arrange: Mocking repository behavior to return empty when patient is not found
         when(patientRepository.findById(1L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        // Act & Assert: Verify that calling getPatientById(1L) throws a RuntimeException
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             patientService.getPatientById(1L);
         });
 
+        // Check that the exception message is correct
         assertEquals("Patient not found", exception.getMessage());
     }
 }
-

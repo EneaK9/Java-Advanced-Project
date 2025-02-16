@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+/**
+ * Entity class representing a Patient's Discharge.
+ */
+@Entity // Marks this class as a JPA entity (a table in the database)
 @Table(name = "discharge")
 public class Discharge {
 
@@ -12,19 +15,38 @@ public class Discharge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Stores the date when the patient was discharged.
+     */
     @Column(name = "discharge_date", nullable = false)
     private LocalDateTime dischargeDate;
 
-    @Enumerated(EnumType.STRING)
+    /**
+     * Enum representing the possible reasons for discharge.
+     * - HEALTHY → The patient recovered.
+     * - TRANSFERRED → The patient was moved to another hospital.
+     * - DECEASED → The patient passed away.
+     */
+    @Enumerated(EnumType.STRING) // Store Enum as a String in the database
     @Column(name = "reason", nullable = false)
     private DischargeReason dischargeReason; // ENUM: DECEASED, HEALTHY, TRANSFERRED
 
+    /**
+     * Relationship with Patient:
+     * - Many discharges can be associated with one patient.
+     * - Uses `@ManyToOne` to define the foreign key relationship.
+     * - `@JsonBackReference` prevents infinite recursion in JSON serialization.
+     */
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
     @JsonBackReference
     private Patient patient;
 
-    @Column(columnDefinition = "LONGTEXT")
+    /**
+     * Notes about the patient's discharge, written by medical staff.
+     * - Uses `@Column(columnDefinition = "LONGTEXT")` to store large text content.
+     */
+    @Column(columnDefinition = "LONGTEXT")  // Allows for long text storage
     private String notes;
 
     // Getter and Setter for id
